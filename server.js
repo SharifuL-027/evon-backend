@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-// 1. IMPORT YOUR ROUTE FILE HERE (Make sure the folder name matches!)
-const productRoutes = require('./routes/productRoutes'); // <-- ADD THIS
+// 1. IMPORT YOUR ROUTE FILES HERE
+const productRoutes = require('./routes/productRoutes'); 
+const orderRoutes = require('./routes/orderRoutes'); // <-- ADDED THIS FOR ORDERS
 
 const app = express();
 
 // Middlewares
+// (Make sure to update cors with your Netlify link if you haven't yet!)
 app.use(cors()); 
 app.use(express.json()); 
 
@@ -17,8 +19,9 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB successfully!'))
   .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// 2. CONNECT THE ROUTE HERE (Must be below app.use(express.json()) )
-app.use('/api/products', productRoutes); // <-- ADD THIS
+// 2. CONNECT THE ROUTES HERE (Must be below app.use(express.json()) )
+app.use('/api/products', productRoutes); 
+app.use('/api/orders', orderRoutes); // <-- ADDED THIS FOR ORDERS
 
 // Basic Test Route
 app.get('/', (req, res) => {
